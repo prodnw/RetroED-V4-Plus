@@ -1470,6 +1470,18 @@ void SceneViewer::drawScene()
                         addPoly(tileX, tileY + 0x10, tileUVArray[point], tileUVArray[point + 3], 0, gfxSurface);
                         addPoly(tileX + 0x10, tileY + 0x10, tileUVArray[point + 2], tileUVArray[point + 3], 0,
                                 gfxSurface);
+
+                        // safety pass
+                        if (renderCount >= vertexListLimit - 8) {
+                            PlaceArgs args;
+                            args.texID = 0;
+
+                            renderCount -= count * 4;
+                            addRenderState(INK_BLEND, count * 4, count * 6, &args, 0xFF, &placeShader);
+                            renderCount += count * 4;
+                            renderRenderStates();
+                            count = 0;
+                        }
                     }
                 }
 
@@ -1481,6 +1493,7 @@ void SceneViewer::drawScene()
             renderCount -= count * 4;
             addRenderState(INK_BLEND, count * 4, count * 6, &args, 0xFF, &placeShader);
             renderCount += count * 4;
+            renderRenderStates();
             drawRect(xpos, ypos, stamp.size.x * tileSize, stamp.size.y * tileSize, Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f),
                      true, 0x40, INK_ALPHA);
         }
