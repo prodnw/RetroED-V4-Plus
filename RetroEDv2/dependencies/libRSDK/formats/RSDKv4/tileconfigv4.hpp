@@ -89,7 +89,7 @@ public:
     inline void read(Reader &reader)
     {
         filePath = reader.filePath;
-        for (int c = 0; c < 0x400; ++c) {
+        for (int c = 0; c < 2048; ++c) {
             for (int p = 0; p < 2; ++p) collisionPaths[p][c].read(reader);
         }
     }
@@ -107,13 +107,13 @@ public:
     {
         filePath = writer.filePath;
 
-        for (int c = 0; c < 0x400; ++c) {
+        for (int c = 0; c < 2048; ++c) {
             for (int p = 0; p < 2; ++p) collisionPaths[p][c].write(writer);
         }
         writer.flush();
     }
 
-    CollisionMask collisionPaths[2][0x400];
+    CollisionMask collisionPaths[2][2048];
 
     QString filePath = "";
 };
