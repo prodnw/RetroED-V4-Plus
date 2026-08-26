@@ -94,7 +94,7 @@ public:
     {
         filePath = reader.filePath;
 
-        for (int c = 0; c < 0x200; ++c) chunkList[c].read(reader);
+        for (int c = 0; c < 1024; ++c) chunkList[c].read(reader);
     }
 
     inline void write(QString filename)
@@ -110,12 +110,12 @@ public:
     {
         filePath = writer.filePath;
 
-        for (int c = 0; c < 0x200; ++c) chunkList[c].write(writer);
+        for (int c = 0; c < 1024; ++c) chunkList[c].write(writer);
 
         writer.flush();
     }
 
-    Chunk chunkList[0x200];
+    Chunk chunkList[1024];
 
     QString filePath = "";
 };
